@@ -1,0 +1,31 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Mes Ateliers Inscrits</h1>
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">Nom de l'atelier</th>
+                <th scope="col">Description</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for atelier in ateliers %}
+                <tr>
+                    <td>{{ atelier.nom }}</td>
+                    <td>{{ atelier.description }}</td>
+                    <td> <a href="{{ path('app_atelier_confirmationDesinscription', {'id': atelier.id}) }}" class="btn btn-danger btn-sm">Se désinscrire</a></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="2" class="text-center">Aucun atelier inscrit</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('app_atelier_index') }}" class="btn btn-secondary">Retour</a>
+    </div>
+{% endblock %}

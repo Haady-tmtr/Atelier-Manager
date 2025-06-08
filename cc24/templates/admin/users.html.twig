@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des utilisateurs{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="mb-4 text-center">Liste des utilisateurs</h1>
+
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Mail</th>
+                <th scope="col">Rôle</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.nom }}</td>
+                    <td>{{ user.prenom }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        {% if 'ROLE_ADMIN' in user.roles %}
+                            <span class="badge bg-danger">Administrateur</span>
+                        {% elseif 'ROLE_INSTRUCTEUR' in user.roles %}
+                            <span class="badge bg-primary">Instructeur</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Apprenti</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if 'ROLE_ADMIN' in user.roles %}
+                            <a href="{{ path('removeAdmin', {id: user.id}) }}" class="btn btn-warning btn-sm">
+                                <i class="fas fa-user-minus"></i> Rétrograder Admin
+                            </a>
+                        {% else %}
+                            <a href="{{ path('makeAdmin', {id: user.id}) }}" class="btn btn-success btn-sm">
+                                <i class="fas fa-user-plus"></i> Promouvoir Admin
+                            </a>
+                        {% endif %}
+
+                        {% if 'ROLE_INSTRUCTEUR' in user.roles %}
+                            <a href="{{ path('removeInstructeur', {id: user.id}) }}" class="btn btn-danger btn-sm">
+                                <i class="fas fa-user-times"></i> Rétrograder Instructeur
+                            </a>
+                        {% else %}
+                            <a href="{{ path('makeInstructeur', {id: user.id}) }}" class="btn btn-info btn-sm">
+                                <i class="fas fa-user-check"></i> Promouvoir Instructeur
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

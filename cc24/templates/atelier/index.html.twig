@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-2">Les ateliers disponibles</h1>
+
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Description</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for atelier_user in ateliers_user %}
+                <tr>
+                    <td>{{ atelier_user.id }}</td>
+                    <td>{{ atelier_user.nom }}</td>
+                    <td>{{ atelier_user.description | markdown | raw }}</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a href="{{ path('app_atelier_show', {'id': atelier_user.id}) }}" class="btn btn-primary btn-sm">Afficher</a>
+
+                            {% if is_granted('ROLE_INSTRUCTEUR') and app.user == atelier_user.instructeur %}
+                                <a href="{{ path('app_atelier_edit', {'id': atelier_user.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                                <a href="{{ path('app_atelier_apprentis', {'id': atelier_user.id}) }}" class="btn btn-secondary btn-sm">Voir apprentis</a>
+                            {% endif %}
+
+                            
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            {% for atelier_other in ateliers_other %}
+                <tr>
+                    <td>{{ atelier_other.id }}</td>
+                    <td>{{ atelier_other.nom }}</td>
+                    <td>{{ atelier_other.description | markdown | raw }}</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a href="{{ path('app_atelier_show', {'id': atelier_other.id}) }}" class="btn btn-primary btn-sm">Afficher</a>
+                            {% if is_granted('ROLE_INSTRUCTEUR') and app.user == atelier_other.instructeur %}
+                                <a href="{{ path('app_atelier_edit', {'id': atelier_other.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                            {% endif %}
+
+                            {% if is_granted('ROLE_APPRENTI') %}
+                                {% if atelier_other.id in app.user.getAteliersInscrits()|map(a => a.id) %}
+                                    <a href="{{ path('app_atelier_confirmationDesinscription', {'id': atelier_other.id}) }}" class="btn btn-danger btn-sm">Se désinscrire</a>
+                                {% else %}
+                                    <a href="{{ path('app_atelier_confirmationInscription', {'id': atelier_other.id}) }}" class="btn btn-success btn-sm">S'inscrire</a>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">Aucun atelier disponible</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if is_granted('ROLE_INSTRUCTEUR') %}
+        <div class="text-right">
+            <a href="{{ path('app_atelier_new') }}" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Nouvel atelier
+            </a>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

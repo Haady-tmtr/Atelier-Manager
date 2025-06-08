@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Symfony App - Accueil{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="text-center mb-5">
+            <h1 class="display-4 text-success">Welcome to our Symfony App</h1>
+        </div>
+
+        <!-- Section About this App -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h2 class="card-title text-primary">✅ About this App</h2>
+            </div>
+        </div>
+
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h2 class="card-title text-info">Team Members</h2>
+                <hr>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">THEAULT Thomas</li>
+                    <li class="list-group-item">TIEMTORE Mohamed Haady</li>
+                    <li class="list-group-item">AHMED IZID BIH NEYE Fatimetou Zahra</li>
+                    <li class="list-group-item">SACKO Bakary</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer class="text-center mt-5 text-muted">
+            <small>© {{ "now"|date("Y") }} All rights reserved.</small>
+        </footer>
+    </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Apprentis inscrits à {{ atelier.nom }}</h1>
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for apprenti in apprentis %}
+                <tr>
+                    <td>{{ apprenti.nom }}</td>
+                    <td>{{ apprenti.prenom }}</td>
+                    <td>{{ apprenti.email }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3" class="text-center">Aucun apprenti inscrit</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('app_atelier_index') }}" class="btn btn-secondary">Retour</a>
+    </div>
+{% endblock %}

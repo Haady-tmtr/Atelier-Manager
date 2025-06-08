@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Taux de Satisfaction de l'Atelier{% endblock %}
+
+{% block body %}
+    <h1>Satisfaction de l'atelier {{ atelier.nom }}</h1>
+    <a href="{{ path('app_atelier_show', {id: atelier.id}) }}" class="btn btn-secondary mt-3">Retour à l'atelier</a>
+    <p>Moyenne de la satisfaction : {{ stats.average_note|number_format(2) }} / 5</p>
+
+    {# Ajouter un élément caché pour stocker les données des notes sous forme de JSON #}
+    <div id="chart-data" data-fields='{{ stats.notes|json_encode|e('html_attr') }}' hidden></div>
+
+    <canvas id="myChart"></canvas>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const dataDiv = document.getElementById("chart-data");
+
+            if (dataDiv) {
+                const rawData = dataDiv.getAttribute("data-fields");
+                const chartData = JSON.parse(rawData);
+
+                const ctx = document.getElementById('myChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['0', '1', '2', '3', '4', '5'],
+                        datasets: [{
+                            label: 'Notes de satisfaction',
+                            data: chartData,
+                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: { beginAtZero: true }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}

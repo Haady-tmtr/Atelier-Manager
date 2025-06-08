@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <!-- Alignement à gauche-->
+        <a class="navbar-brand" href="#">Courses Management</a>
+
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_accueil') }}">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_ateliers_detail') }}">Ateliers</a>
+                </li>
+                {% if is_granted('ROLE_INSTRUCTEUR') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_atelier_new') }}">Nouvel Atelier</a>
+                </li>
+                {% endif %}
+                {% if is_granted('ROLE_APPRENTI') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_ateliers_mesAteliers') }}">Mes ateliers inscrits</a>
+                </li>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('adminUsers') }}">Gestion des Utilisateurs</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_atelier_accueil') }}">About
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="d-flex align-items-center">
+            {% if app.user %}
+                <span class="text-white me-2">{{ app.user.nom }}</span>
+                <a class="btn btn-outline-light" href="{{ path('app_logout') }}">Se déconnecter</a>
+            {% else %}
+                <a class="btn btn-light" href="{{ path('app_login') }}">Se connecter</a>
+            {% endif %}
+        </div>
+
+    </div>
+</nav>
+

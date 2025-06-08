@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un Atelier{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card shadow-sm p-4">
+            <h1 class="text-center text-primary">Créer un nouvel atelier</h1>
+            <hr>
+
+            {{ include('atelier/_form.html.twig') }}
+
+            <div class="text-center mt-3">
+                <a href="{{ path('app_atelier_index') }}" class="btn btn-secondary">Retour à la liste détaillée</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

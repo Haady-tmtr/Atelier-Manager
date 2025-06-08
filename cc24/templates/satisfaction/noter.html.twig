@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Noter l'atelier{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h2>Noter l'atelier : {{ atelier.nom }}</h2>
+
+        {{ form_start(form) }}
+        <div class="mb-3">
+            {{ form_label(form.note) }}
+            {{ form_widget(form.note, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.note) }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Soumettre</button>
+        {{ form_end(form) }}
+
+        <a href="{{ path('app_atelier_show', {id: atelier.id}) }}" class="btn btn-secondary mt-3">Retour à l'atelier</a>
+    </div>
+{% endblock %}
